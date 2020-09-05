@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Collapsible sidebar using Bootstrap 3</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="wasm_exec.js"></script>
+    <script>
+        if (!WebAssembly.instantiateStreaming) { // polyfill
+            WebAssembly.instantiateStreaming = async (resp, importObject) => {
+                const source = await (await resp).arrayBuffer();
+                return await WebAssembly.instantiate(source, importObject);
+            };
+        }
+
+        const go = new Go();
+        let inst;
+        WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then( async (result) => {
+            await go.run(result.instance);
+        });
+    </script>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+            display_func("master_key",false)
+        });
+    </script>
+</head>
+<body>
+
+
+
+<div class="wrapper">
+    <!-- Sidebar Holder -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3>Encrypt-GIG</h3>
+            <strong>EG</strong>
+        </div>
+
+        <ul class="list-unstyled components">
+            <li class="active">
+                <a href="#" onclick='display_func("master_key",false)'>
+                    <i class="glyphicon glyphicon-home"></i>
+                    Home
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick='display_func("encrypt_data", true)'>
+                    <i class="glyphicon glyphicon-file"></i>
+                    Encrypt Data
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick='display_func("encrypt_file", true)'>
+                    <i class="glyphicon glyphicon-file"></i>
+                    Encrypt File
+                </a>
+            </li>
+            <li >
+                <a href="#" onclick='display_func("encrypt_csv", true)' >
+                    <i class="glyphicon glyphicon-th"></i>
+                    Encrypt CSV
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="glyphicon glyphicon-briefcase"></i>
+                    About
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="glyphicon glyphicon-send"></i>
+                    Contact
+                </a>
+            </li>
+        </ul>
+
+    </nav>
+
+    <!-- Page Content Holder -->
+    <div id="content">
+
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+
+                <div class="navbar-header">
+                    <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                        <i class="glyphicon glyphicon-lock"></i>
+                        <span>Encrypt-GIG</span>
+                    </button>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#"><b>Documentation</b></a></li>
+                        <li><a href="#"><b>Crypto API</b></a></li>
+                        <li><a href="#"><b>Contact</b></a></li>
+                    </ul>
+                    <div class="container" style="text-align: center">
+                        <h2  style="text-align: center;margin-top: 10px;" id="sys_status"></h2>
+                    </div>
+
+
+                </div>
+            </div>
+        </nav>
+
+        <div id="main-div" >
+            <div id="master_key">
+                <h3>Insert Master Key</h3>
+                <div class="form-group">
+                    <label for="pwd">Master Password:</label>
+                    <input type="password" class="form-control" id="master_password">
+                </div>
+                <div class="form-group">
+                    <button class="btn" onclick='initilizeSystem(document.getElementById("master_password"))'>Begin Encryption</button>
+                </div>
+                <div class="line"></div>
+                <h3>What is master key ?</h3>
+                <p>
+                    <b>We don't save your master password.</b>
+                    The master used as your password to lock and unlock your data, and you must remember it for further encryption and decryption.
+                    If you forget your master key. The data you encrypted wil be lost. For more safety keep your master key in a secure vault where you can save your secret.
+                    You must choose a strong master password for enhanced security.
+                </p>
+            </div>
+
+            <div id="encrypt_data">
+                <h3>Data Encryption</h3>
+                <div class="form-group">
+                    <label for="data">Plain Data:</label>
+                    <textarea  class="form-control" id="plain_text" placeholder="Enter Data to encrypt" name="data" ></textarea>
+                </div>
+                <div class="form-group">
+                    <button  onclick='crypto_local( document.getElementById("plain_text").value , true )' class="btn">Encrypt</button>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="data">Encrypted Data:</label>
+                    <textarea  class="form-control" id="encrypted_text" placeholder="Enter Data to decrypt" name="data" ></textarea>
+                </div>
+                <div class="form-group">
+                    <button  onclick='crypto_local( document.getElementById("encrypted_text").value , false )' class="btn">Decrypt</button>
+                </div>
+                <div class="line"></div>
+                <h3>About Data Encryption</h3>
+                <p>
+                    <b>We don't let your data travel over internet.</b>
+                    Test our application with your data and we just secure it. Send this secure data anywhere to anu body and they won't be able to see it until you want them to see it.
+                    Ans say what key is not constant, you can reinitialize data encryption key by just entering you master key in home menu.
+                </p>
+
+            </div>
+
+            <div id="encrypt_file">
+                <h3>File Encryption</h3>
+                <div class="form-group">
+                    <p>File to encrypt:</p>
+                    <input type="file" id="enc_file_name">
+                </div>
+                <div class="form-group" >
+                    <button class="btn" id="button_file_encrypt" onclick='fileCrypto(true)'>Encrypt File</button>
+                    <button class="btn" id="button_file_decrypt" onclick='fileCrypto(false)'>Decrypt File</button>
+                </div>
+                <div class="line"></div>
+                <h3>About File Encryption</h3>
+                <p>
+                    <b>We don't let your data travel over internet.</b>
+                    You can encrypt any of your file i.e. <b>PDF, jpeg, video or any file that is text or binary,</b> using this facility. We somehow use your master password for doing that.
+                    You can have your peace of mind because your data is encrypted without us knowing it.
+                    If you don't trust us just check you browser's debug logs and believe.
+                </p>
+            </div>
+
+            <div id="encrypt_csv">
+                <h3>CSV Encryption</h3>
+                <div class="form-group">
+                    <p>CSV File to encrypt:</p>
+                    <input type="file" id="csv_file_name" onchange='initCSV()'>
+                </div>
+                <div class="form-group">
+                    <label for="pwd">Columns To Encrypt:</label>
+                    <div id="cols_csv">
+
+                    </div>
+                </div>
+                <div class="form-group" >
+                    <button class="btn" id="button_csv_encrypt" onclick='csvCrypto(true)'>Encrypt File</button>
+                    <button class="btn" id="button_csv_decrypt" onclick='csvCrypto(false)'>Decrypt File</button>
+                </div>
+                <div class="line"></div>
+                <h3>About CSV Encryption</h3>
+                <p>
+                    <b>We can encrypt any column or row in your csv.</b>
+                    We tokenize the data you give us in CSV file. Trust us we don't change the size of data while we tokenize it.
+                    The resultant fil is CSV, that contains your tokenized CSV data.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
