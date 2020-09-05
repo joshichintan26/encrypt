@@ -5,7 +5,7 @@ var systemStatus = 0;
 function display_func(id, validate) {
     if ( validate==true) {
         if (systemStatus == 0) {
-            alert("please initialize system to continue...");
+            alert("please insert master key to continue...");
             return;
         }
     }
@@ -26,9 +26,11 @@ function setHeading() {
     if (systemStatus == 0) {
         document.getElementById('sys_status').innerHTML = "System Not Initialized";
         document.getElementById('sys_status').style.color = "#B53009"
+        document.getElementById('sidebarCollapse').style.backgroundColor = "#B53009"
     } else {
         document.getElementById('sys_status').innerHTML = "System Initialized";
         document.getElementById('sys_status').style.color = "#2C552F"
+        document.getElementById('sidebarCollapse').style.backgroundColor = "#6d7fcc"
     }
 }
 
