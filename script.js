@@ -49,7 +49,19 @@ function initilizeSystem( element) {
     }
     element.value = ""
     systemStatus = 1;
-    setHeading()
+    setHeading();
+
+    const link = document.getElementById("sidebarCollapse");
+    // this is necessary as link.click() does not work on the latest firefox
+    link.dispatchEvent(
+        new MouseEvent('click', {
+            bubbles: true,
+            cancelable: true,
+            view: window
+        })
+    );
+    display_func("encrypt_data",true);
+
 }
 
 function crypto_local( data, encrypt) {
