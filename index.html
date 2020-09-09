@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
+	<meta name="google-signin-client_id" content="1069934900773-fn61ukfjudqa9medkn4sms9902ik9mtd.apps.googleusercontent.com">
+	
     <title>Encrypt-GIG- Encrypt Anything</title>
 
     <!-- Bootstrap CSS CDN -->
@@ -28,14 +29,30 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="script.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
             });
+			$('#avatar').on('click', function () {
+               $('#avatar').hide();
+  			   signOut();
+            });
             display_func("master_key",false)
         });
+		function onSignIn(googleUser) {
+		  var profile = googleUser.getBasicProfile();
+		  $('.g-signin2').hide();
+		  $('#avatar').attr("src", profile.getImageUrl());
+		  $('#avatar').attr("alt", profile.getName());
+		};
+		function signOut() {
+			var auth2 = gapi.auth2.getAuthInstance();
+			auth2.signOut();
+			$('.g-signin2').show();
+		  };
     </script>
 </head>
 <body>
@@ -109,6 +126,10 @@
                         <li><a href="#"><b>Documentation</b></a></li>
                         <li><a href="#"><b>Crypto API</b></a></li>
                         <li><a href="#"><b>Contact</b></a></li>
+						<li>
+							<img id="avatar" width="40px" class="avatar img-circle"/>
+						</li>
+						<li><div class="g-signin2" data-onsuccess="onSignIn"></div></li>
                     </ul>
                     <div class="container" style="text-align: center">
                         <h2  style="text-align: center;margin-top: 10px;" id="sys_status"></h2>
