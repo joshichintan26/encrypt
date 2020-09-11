@@ -1,5 +1,5 @@
 
-var systemStatus = 0;
+var profile = null;
 
 
 function display_func(id, validate) {
@@ -19,10 +19,12 @@ function display_func(id, validate) {
     }
     document.getElementById(id).style.display = "block";
     setHeading();
+
 }
 
 
 function setHeading() {
+    systemStatus = WASMGo.getState();
     if (systemStatus == 0) {
         document.getElementById('sys_status').innerHTML = "System Not Initialized";
         document.getElementById('sys_status').style.color = "#B53009"
@@ -35,20 +37,16 @@ function setHeading() {
 }
 
 
-function initilizeSystem( element) {
-    systemStatus = 0;
-    password = element.value
-    if ( password.length == 0) {
-        alert("Password cannot be zero length");
-        return;
-    }
+function initilizeSystemWithProfile( ) {
+    systemStatus = WASMGo.getState();
+    password = profile.getName()
+    alert(password)
     err = WASMGo.instantiate(password);
     if (err != null) {
         alert(err);
         return;
     }
     element.value = ""
-    systemStatus = 1;
     setHeading();
 
     const link = document.getElementById("sidebarCollapse");
@@ -61,22 +59,72 @@ function initilizeSystem( element) {
         })
     );
     display_func("encrypt_data",true);
+    $('#avatar').attr("src", profile.getImageUrl());
+    $('#avatar').attr("alt", profile.getName());
+    systemStatus = WASMGo.getState();
+}
+
+
+
+function initilizeSystem( element) {
+    systemStatus = WASMGo.getState();
+    password = element.value
+    if ( password.length == 0) {
+        alert("Password cannot be zero length");
+        return;
+    }
+    err = WASMGo.instantiate(password);
+    if (err != null) {
+        alert(err);
+        return;
+    }
+    element.value = ""
+    setHeading();
+
+    const link = document.getElementById("sidebarCollapse");
+    // this is necessary as link.click() does not work on the latest firefox
+    link.dispatchEvent(
+        new MouseEvent('click', {
+            bubbles: true,
+            cancelable: true,
+            view: window
+        })
+    );
+    systemStatus = WASMGo.getState();
+    display_func("encrypt_data",true);
 
 }
 
+
+function onFailure(error) {
+    console.log(error);
+}
+
 function onSignIn(googleUser) {
-    var profile = googleUser.getBasicProfile();
+    WASMGo.reset();
+    profile = googleUser.getBasicProfile();
     $('.g-signin2').hide();
-    $('#avatar').attr("src", profile.getImageUrl());
-    $('#avatar').attr("alt", profile.getName());
-    document.getElementById("master_password").value = profile.getName()
-    initilizeSystem(document.getElementById("master_password"))
+    initilizeSystemWithProfile();
 };
 function signOut() {
+    WASMGo.reset();
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut();
     $('.g-signin2').show();
 };
+
+function renderButton() {
+    gapi.signin2.render('my-signin2', {
+        'scope': 'profile email',
+        'width': 240,
+        'height': 50,
+        'longtitle': false,
+        'theme': 'light',
+        'onsuccess': onSignIn,
+        'onfailure': onFailure
+    });
+}
+
 
 function crypto_local( data, encrypt) {
     out = "";

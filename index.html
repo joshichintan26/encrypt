@@ -29,8 +29,8 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="script.js"></script>
+	<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $('#sidebarCollapse').on('click', function () {
@@ -40,7 +40,7 @@
                $('#avatar').hide();
   			   signOut();
             });
-            display_func("master_key",false)
+            display_func("master_key",false);
         });
     </script>
 </head>
@@ -57,6 +57,14 @@
         </div>
 
         <ul class="list-unstyled components">
+            <li >
+                <a href="#">
+                    <li>
+                        <img id="avatar" width="40px" class="avatar img-circle"/>
+                    </li>
+                    <li> <div id="my-signin2" ></div></li>
+                </a>
+            </li>
             <li class="active">
                 <a href="#" onclick='display_func("master_key",false)'>
                     <i class="glyphicon glyphicon-home"></i>
@@ -115,10 +123,6 @@
                         <li><a href="#"><b>Documentation</b></a></li>
                         <li><a href="#"><b>Crypto API</b></a></li>
                         <li><a href="#"><b>Contact</b></a></li>
-						<li>
-							<img id="avatar" width="40px" class="avatar img-circle"/>
-						</li>
-						<li><div class="g-signin2" data-onsuccess="onSignIn"></div></li>
                     </ul>
                     <div class="container" style="text-align: center">
                         <h2  style="text-align: center;margin-top: 10px;" id="sys_status"></h2>
