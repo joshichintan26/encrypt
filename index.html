@@ -42,17 +42,6 @@
             });
             display_func("master_key",false)
         });
-		function onSignIn(googleUser) {
-		  var profile = googleUser.getBasicProfile();
-		  $('.g-signin2').hide();
-		  $('#avatar').attr("src", profile.getImageUrl());
-		  $('#avatar').attr("alt", profile.getName());
-		};
-		function signOut() {
-			var auth2 = gapi.auth2.getAuthInstance();
-			auth2.signOut();
-			$('.g-signin2').show();
-		  };
     </script>
 </head>
 <body>
@@ -129,7 +118,7 @@
 						<li>
 							<img id="avatar" width="40px" class="avatar img-circle"/>
 						</li>
-						<li><div class="g-signin2" data-onsuccess="onSignIn"></div></li>
+						<li><div class="g-signin2" data-onsuccess="onSignIn()"></div></li>
                     </ul>
                     <div class="container" style="text-align: center">
                         <h2  style="text-align: center;margin-top: 10px;" id="sys_status"></h2>

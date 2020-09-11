@@ -64,6 +64,20 @@ function initilizeSystem( element) {
 
 }
 
+function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    $('.g-signin2').hide();
+    $('#avatar').attr("src", profile.getImageUrl());
+    $('#avatar').attr("alt", profile.getName());
+    document.getElementById("master_password").value = profile.getName()
+    initilizeSystem(document.getElementById("master_password"))
+};
+function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut();
+    $('.g-signin2').show();
+};
+
 function crypto_local( data, encrypt) {
     out = "";
     if (encrypt == true) {
