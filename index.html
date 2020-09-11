@@ -36,7 +36,7 @@
             let inst;
             WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then( (result) => {
                 go.run(result.instance);
-                display_func("master_key",false);
+                display_func("about",false);
                 startApp()
             });
 
@@ -66,7 +66,7 @@
         <ul class="list-unstyled components">
 
             <li class="active" id="login">
-                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" >
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" id="loginLink" >
                     <i class="fa fa-user"></i>
                     Login
                 </a>
@@ -108,7 +108,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="#" onclick='display_func("about", false)'>
                     <i class="glyphicon glyphicon-briefcase"></i>
                     About
                 </a>
@@ -159,7 +159,7 @@
                     <input type="password" class="form-control" id="master_password">
                 </div>
                 <div class="form-group">
-                    <button class="btn" onclick='initilizeSystem(document.getElementById("master_password"))'>Begin Encryption</button>
+                    <button class="btn" onclick='initilizeSystem(document.getElementById("master_password"),true)'>Begin Encryption</button>
                 </div>
                 <div class="line"></div>
                 <h3>What is master key ?</h3>
@@ -243,6 +243,22 @@
                     The resultant fil is CSV, that contains your tokenized CSV data.
                 </p>
             </div>
+
+            <div id="about">
+                <h3>About This App</h3>
+                <p>
+                     This app is a demonstration of how you browser can be used for encrypting data. All you need to do is 
+                     login or set master password and the browser is ready to encrypt data or file. 
+                     <a  href="#" onclick='display_func("master_key",false, true)'><b>Click here</b></a> to start.
+                </p>
+
+                <h3>About Us</h3>
+                <p>
+                    Securing data has become paramount more than ever in the current pandemic situation, where half of the earth’s population is working from home. This has also opened a gate for attackers, who are tempted more than before to steal the data and take advantage of this global crisis. With our revolutionary encryption product- EncryptGig Secure Data (EGSD)- you can encrypt all your data- be it sensitive or to-be-sensitive- with just a point of click. EGSD is pioneered on the most advanced cryptography algorithm so that you can protect your data wherever they reside- be at home or Cloud or Datacenter. Our API is designed on stateless architecture, hence any size of organization – whether it’s a fortune 500 or MSME or even an individual- could easily deploy our product to protect large data on fingertips. Additionally, in the growing remote working culture scenario- it has become imperative for organizations or individuals to secure data irrespective of employee’s designation and location. Keeping that in mind, the EGSD engine can encrypt any type and size of data- be it structured or unstructured, stored in a private or public cloud, on-premise or home, our container-based solution could easily be deployed and scalable in 'n' number of nodes. Hence, organizations can scale up their encryption operation with us to any extent. Another benefit is, you can simply Bring Your Own Key (BYOK) and just embed it with EncryptGig Engine, and you are all set to encrypt your data on any public cloud i.e. AWS, Azure, Google Cloud, SalesForce, and even small clouds. Besides, you can also pull keys from any public cloud and use it on cross-cloud for encryption with the help of our innovative solution- industry's first.
+                </p>
+
+            </div>
+
         </div>
     </div>
 </div>

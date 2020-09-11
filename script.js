@@ -1,5 +1,6 @@
 
 var profile = null;
+var op = 0;
 
 function getSystemStatus() {
     if (WASMGo == null ) {
@@ -9,7 +10,7 @@ function getSystemStatus() {
     }
 }
 
-function display_func(id, validate) {
+function display_func(id, validate, openlogin) {
 
     systemStatus = getSystemStatus()
 
@@ -32,6 +33,18 @@ function display_func(id, validate) {
     if (systemStatus == 0) {
         document.getElementById("logout").style.display="none";
         document.getElementById("login").style.display="block";
+
+        if (openlogin) {
+            const link = document.getElementById("loginLink");
+            // this is necessary as link.click() does not work on the latest firefox
+            link.dispatchEvent(
+                new MouseEvent('click', {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window
+                })
+            );
+        }
     } else {
         document.getElementById("logout").style.display="block";
         document.getElementById("login").style.display="none";
@@ -54,7 +67,7 @@ function setHeading() {
 }
 
 
-function initilizeSystemWithProfile( ) {
+function initilizeSystemWithProfile( opentray) {
     systemStatus = getSystemStatus()
     password = profile.getName()
     err = WASMGo.instantiate(password);
@@ -64,22 +77,24 @@ function initilizeSystemWithProfile( ) {
     }
     setHeading();
 
-    const link = document.getElementById("sidebarCollapse");
-    // this is necessary as link.click() does not work on the latest firefox
-    link.dispatchEvent(
-        new MouseEvent('click', {
-            bubbles: true,
-            cancelable: true,
-            view: window
-        })
-    );
+    if (opentray) {
+        const link = document.getElementById("sidebarCollapse");
+        // this is necessary as link.click() does not work on the latest firefox
+        link.dispatchEvent(
+            new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true,
+                view: window
+            })
+        );
+    }
     display_func("encrypt_data",true);
     systemStatus = getSystemStatus()
 }
 
 
 
-function initilizeSystem( element) {
+function initilizeSystem( element, opentray) {
     systemStatus = getSystemStatus()
     password = element.value
     if ( password.length == 0) {
@@ -94,15 +109,17 @@ function initilizeSystem( element) {
     element.value = ""
     setHeading();
 
-    const link = document.getElementById("sidebarCollapse");
-    // this is necessary as link.click() does not work on the latest firefox
-    link.dispatchEvent(
-        new MouseEvent('click', {
-            bubbles: true,
-            cancelable: true,
-            view: window
-        })
-    );
+    if (opentray) {
+        const link = document.getElementById("sidebarCollapse");
+        // this is necessary as link.click() does not work on the latest firefox
+        link.dispatchEvent(
+            new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true,
+                view: window
+            })
+        );
+    }
     systemStatus = getSystemStatus()
     display_func("encrypt_data",true);
 
@@ -118,7 +135,7 @@ function onSignIn(googleUser) {
     WASMGo.reset();
     profile = googleUser.getBasicProfile();
     $('.g-signin2').hide();
-    initilizeSystemWithProfile();
+    initilizeSystemWithProfile(true);
     document.getElementById("login").style.display="none";
 
 };
