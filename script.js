@@ -3,6 +3,7 @@ var profile = null;
 
 
 function display_func(id, validate) {
+    systemStatus = WASMGo.getState();
     if ( validate==true) {
         if (systemStatus == 0) {
             alert("please insert master key to continue...");
@@ -97,6 +98,7 @@ function initilizeSystem( element) {
 
 
 function onFailure(error) {
+    WASMGo.reset();
     console.log(error);
 }
 
