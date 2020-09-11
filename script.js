@@ -29,6 +29,10 @@ function display_func(id, validate) {
     }
     document.getElementById(id).style.display = "block";
     setHeading();
+    if (systemStatus == 0) {
+        document.getElementById("logout").style.display="none";
+        document.getElementById("login").style.display="block";
+    } 
 
 }
 
@@ -116,12 +120,13 @@ function onSignIn(googleUser) {
     profile = googleUser.getBasicProfile();
     $('.g-signin2').hide();
     initilizeSystemWithProfile();
+    document.getElementById("login").style.display="none";
 };
 function signOut() {
     WASMGo.reset();
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut();
-    $('.g-signin2').show();
+    document.getElementById("logout").style.display="none";
 };
 
 
@@ -144,7 +149,6 @@ function attachSignin(element) {
         function(googleUser) {
             onSignIn(googleUser)
         }, function(error) {
-            alert(JSON.stringify(error, undefined, 2));
         });
 }
 
