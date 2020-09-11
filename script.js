@@ -1,9 +1,18 @@
 
 var profile = null;
 
+function getSystemStatus() {
+    if (WASMGo == null ) {
+        return 0
+    } else {
+        return WASMGo.getState();
+    }
+}
 
 function display_func(id, validate) {
-    systemStatus = WASMGo.getState();
+
+    systemStatus = getSystemStatus()
+
     if ( validate==true) {
         if (systemStatus == 0) {
             alert("please insert master key to continue...");
@@ -25,7 +34,7 @@ function display_func(id, validate) {
 
 
 function setHeading() {
-    systemStatus = WASMGo.getState();
+    systemStatus = getSystemStatus()
     if (systemStatus == 0) {
         document.getElementById('sys_status').innerHTML = "System Not Initialized";
         document.getElementById('sys_status').style.color = "#B53009"
@@ -39,7 +48,7 @@ function setHeading() {
 
 
 function initilizeSystemWithProfile( ) {
-    systemStatus = WASMGo.getState();
+    systemStatus = getSystemStatus()
     password = profile.getName()
     alert(password)
     err = WASMGo.instantiate(password);
@@ -62,13 +71,13 @@ function initilizeSystemWithProfile( ) {
     display_func("encrypt_data",true);
     $('#avatar').attr("src", profile.getImageUrl());
     $('#avatar').attr("alt", profile.getName());
-    systemStatus = WASMGo.getState();
+    systemStatus = getSystemStatus()
 }
 
 
 
 function initilizeSystem( element) {
-    systemStatus = WASMGo.getState();
+    systemStatus = getSystemStatus()
     password = element.value
     if ( password.length == 0) {
         alert("Password cannot be zero length");
@@ -91,7 +100,7 @@ function initilizeSystem( element) {
             view: window
         })
     );
-    systemStatus = WASMGo.getState();
+    systemStatus = getSystemStatus()
     display_func("encrypt_data",true);
 
 }
@@ -118,13 +127,32 @@ function signOut() {
 function renderButton() {
     gapi.signin2.render('my-signin2', {
         'scope': 'profile email',
-        'width': 240,
-        'height': 50,
-        'longtitle': false,
-        'theme': 'light',
         'onsuccess': onSignIn,
         'onfailure': onFailure
     });
+}
+
+function startApp() {
+    gapi.load('auth2', function(){
+        // Retrieve the singleton for the GoogleAuth library and set up the client.
+        auth2 = gapi.auth2.init({
+            client_id: '1069934900773-fn61ukfjudqa9medkn4sms9902ik9mtd.apps.googleusercontent.com',
+            cookiepolicy: 'single_host_origin',
+            // Request scopes in addition to 'profile' and 'email'
+            //scope: 'additional_scope'
+        });
+        attachSignin(document.getElementById('customBtn'));
+    });
+}
+
+function attachSignin(element) {
+    console.log(element.id);
+    auth2.attachClickHandler(element, {},
+        function(googleUser) {
+            onSignIn(googleUser)
+        }, function(error) {
+            alert(JSON.stringify(error, undefined, 2));
+        });
 }
 
 

@@ -10,29 +10,36 @@
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-    <script src="wasm_exec.js"></script>
-    <script>
-        if (!WebAssembly.instantiateStreaming) { // polyfill
-            WebAssembly.instantiateStreaming = async (resp, importObject) => {
-                const source = await (await resp).arrayBuffer();
-                return await WebAssembly.instantiate(source, importObject);
-            };
-        }
-
-        const go = new Go();
-        let inst;
-        WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then( async (result) => {
-            await go.run(result.instance);
-        });
-    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+    <script src="wasm_exec.js"></script>
+    <script>
+
+    </script>
     <script src="script.js"></script>
 	<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
     <script type="text/javascript">
         $(document).ready(function () {
+
+            if (!WebAssembly.instantiateStreaming) { // polyfill
+                WebAssembly.instantiateStreaming = async (resp, importObject) => {
+                    const source = await (await resp).arrayBuffer();
+                    return await WebAssembly.instantiate(source, importObject);
+                };
+            }
+
+            const go = new Go();
+            let inst;
+            WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then( (result) => {
+                go.run(result.instance);
+                display_func("master_key",false);
+                startApp()
+            });
+
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
             });
@@ -40,7 +47,7 @@
                $('#avatar').hide();
   			   signOut();
             });
-            display_func("master_key",false);
+
         });
     </script>
 </head>
@@ -58,11 +65,9 @@
 
         <ul class="list-unstyled components">
             <li >
-                <a href="#">
-                    <li>
-                        <img id="avatar" width="40px" class="avatar img-circle"/>
-                    </li>
-                    <li> <div id="my-signin2" ></div></li>
+                <a href="#"  id="customBtn">
+                    <i class="fa fa-google"></i>
+                    Google
                 </a>
             </li>
             <li class="active">
