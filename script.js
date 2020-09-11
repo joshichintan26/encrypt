@@ -157,6 +157,7 @@ function startApp() {
             //scope: 'additional_scope'
         });
         attachSignin(document.getElementById('customBtn'));
+        attachSignin(document.getElementById('customBtnBody'));
     });
 }
 
