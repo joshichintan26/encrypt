@@ -30,9 +30,12 @@ function display_func(id, validate) {
     document.getElementById(id).style.display = "block";
     setHeading();
     if (systemStatus == 0) {
-        document.getElementById("logout").style.display="none";
+        document.getElementById("logout").style.display="snone";
         document.getElementById("login").style.display="block";
-    } 
+    } else {
+        document.getElementById("logout").style.display="block";
+        document.getElementById("login").style.display="none";
+    }
 
 }
 
@@ -59,7 +62,6 @@ function initilizeSystemWithProfile( ) {
         alert(err);
         return;
     }
-    element.value = ""
     setHeading();
 
     const link = document.getElementById("sidebarCollapse");
@@ -72,9 +74,6 @@ function initilizeSystemWithProfile( ) {
         })
     );
     display_func("encrypt_data",true);
-    document.getElementById("loginname").value=password
-   // $('#avatar').attr("src", profile.getImageUrl());
-   // $('#avatar').attr("alt", profile.getName());
     systemStatus = getSystemStatus()
 }
 
@@ -121,12 +120,13 @@ function onSignIn(googleUser) {
     $('.g-signin2').hide();
     initilizeSystemWithProfile();
     document.getElementById("login").style.display="none";
+
 };
 function signOut() {
     WASMGo.reset();
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut();
-    document.getElementById("logout").style.display="none";
+    display_func("master_key",false)
 };
 
 
