@@ -64,27 +64,40 @@
         </div>
 
         <ul class="list-unstyled components">
-            <li >
-                <a href="#"  id="customBtn">
-                    <i class="fa fa-google"></i>
-                    Google
+
+            <li class="active" id="login">
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" >
+                    <i class="fa fa-user"></i>
+                    Login
+                </a>
+                <ul class="collapse list-unstyled" id="homeSubmenu">
+                    <a href="#"  id="customBtn">
+                        <i class="fa fa-google"></i>
+                        Google
+                    </a>
+                    <a href="#" onclick='display_func("master_key",false)'>
+                        <i class="fa fa-key"></i>
+                        Master Password
+                    </a>
+                </ul>
+            </li>
+
+            <li class="active" id="logout">
+                <a href="#" onclick='display_func("encrypt_data", true)'>
+                    <i class="fa fa-lock"></i>
+                    Logout
                 </a>
             </li>
-            <li class="active">
-                <a href="#" onclick='display_func("master_key",false)'>
-                    <i class="glyphicon glyphicon-home"></i>
-                    Home
-                </a>
-            </li>
+
             <li>
                 <a href="#" onclick='display_func("encrypt_data", true)'>
-                    <i class="glyphicon glyphicon-file"></i>
+                    <i class="fa fa-lock"></i>
                     Encrypt Data
                 </a>
             </li>
             <li>
                 <a href="#" onclick='display_func("encrypt_file", true)'>
-                    <i class="glyphicon glyphicon-file"></i>
+                    <i class="fa fa-cloud-download"></i>
                     Encrypt File
                 </a>
             </li>

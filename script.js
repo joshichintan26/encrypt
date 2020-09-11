@@ -50,7 +50,6 @@ function setHeading() {
 function initilizeSystemWithProfile( ) {
     systemStatus = getSystemStatus()
     password = profile.getName()
-    alert(password)
     err = WASMGo.instantiate(password);
     if (err != null) {
         alert(err);
@@ -69,8 +68,9 @@ function initilizeSystemWithProfile( ) {
         })
     );
     display_func("encrypt_data",true);
-    $('#avatar').attr("src", profile.getImageUrl());
-    $('#avatar').attr("alt", profile.getName());
+    document.getElementById("loginname").value=password
+   // $('#avatar').attr("src", profile.getImageUrl());
+   // $('#avatar').attr("alt", profile.getName());
     systemStatus = getSystemStatus()
 }
 
@@ -124,13 +124,6 @@ function signOut() {
     $('.g-signin2').show();
 };
 
-function renderButton() {
-    gapi.signin2.render('my-signin2', {
-        'scope': 'profile email',
-        'onsuccess': onSignIn,
-        'onfailure': onFailure
-    });
-}
 
 function startApp() {
     gapi.load('auth2', function(){
