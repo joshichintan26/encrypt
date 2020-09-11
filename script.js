@@ -30,7 +30,7 @@ function display_func(id, validate) {
     document.getElementById(id).style.display = "block";
     setHeading();
     if (systemStatus == 0) {
-        document.getElementById("logout").style.display="snone";
+        document.getElementById("logout").style.display="none";
         document.getElementById("login").style.display="block";
     } else {
         document.getElementById("logout").style.display="block";
