@@ -67,10 +67,9 @@ function setHeading() {
 }
 
 
-function initilizeSystemWithProfile( opentray) {
+function initilizeSystemWithProfile( jwt, opentray) {
     systemStatus = getSystemStatus()
-    password = profile.getName()
-    err = WASMGo.instantiate(password);
+    err = WASMGo.instantiateWithJWT(jwt);
     if (err != null) {
         alert(err);
         return;
@@ -133,9 +132,7 @@ function onFailure(error) {
 
 function onSignIn(googleUser) {
     WASMGo.reset();
-    profile = googleUser.getBasicProfile();
-    $('.g-signin2').hide();
-    initilizeSystemWithProfile(true);
+    initilizeSystemWithProfile(googleUser.getAuthResponse(true).id_token, true);
     document.getElementById("login").style.display="none";
 
 };
@@ -151,7 +148,7 @@ function startApp() {
     gapi.load('auth2', function(){
         // Retrieve the singleton for the GoogleAuth library and set up the client.
         auth2 = gapi.auth2.init({
-            client_id: '1069934900773-fn61ukfjudqa9medkn4sms9902ik9mtd.apps.googleusercontent.com',
+            client_id: '27307749121-8ha68mleqi4kqhlvj3rgugg8mc615e1r.apps.googleusercontent.com',
             cookiepolicy: 'single_host_origin',
             // Request scopes in addition to 'profile' and 'email'
             //scope: 'additional_scope'
@@ -162,7 +159,6 @@ function startApp() {
 }
 
 function attachSignin(element) {
-    console.log(element.id);
     auth2.attachClickHandler(element, {},
         function(googleUser) {
             onSignIn(googleUser)

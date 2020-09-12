@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="google-signin-client_id" content="1069934900773-fn61ukfjudqa9medkn4sms9902ik9mtd.apps.googleusercontent.com">
+	<meta name="google-signin-client_id" content="27307749121-8ha68mleqi4kqhlvj3rgugg8mc615e1r.apps.googleusercontent.com">
 	
     <title>Encrypt-GIG- Encrypt Anything</title>
 
@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://apis.google.com/js/platform.js"></script>
 
 
     <script src="wasm_exec.js"></script>
@@ -21,7 +22,6 @@
 
     </script>
     <script src="script.js"></script>
-	<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -36,8 +36,8 @@
             let inst;
             WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then( (result) => {
                 go.run(result.instance);
-                display_func("about",false);
                 startApp()
+                display_func("about",false);
             });
 
             $('#sidebarCollapse').on('click', function () {
