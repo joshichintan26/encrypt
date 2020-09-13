@@ -29,6 +29,13 @@ a, a:hover, a:focus {
     transition: all 0.3s;
 }
 
+.site_header {
+    padding: 10px;
+    text-align: center;
+    color: #666;
+    font-size: 30px;
+}
+
 .navbar {
     padding: 15px 10px;
     background: #fff;

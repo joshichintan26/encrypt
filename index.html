@@ -61,7 +61,7 @@
     <!-- Sidebar Holder -->
     <nav id="sidebar">
         <div class="sidebar-header">
-            <h3>Encrypt-GIG</h3>
+            <h3>EncryptGIG</h3>
             <strong>EG</strong>
         </div>
 
@@ -112,7 +112,7 @@
             <li >
                 <a href="#" onclick='display_func("encrypt_xls", true)' >
                     <i class="glyphicon glyphicon-certificate"></i>
-                    Encrypt CSV
+                    Encrypt Excel
                 </a>
             </li>
             <li>
@@ -134,13 +134,17 @@
     <!-- Page Content Holder -->
     <div id="content">
 
+        <div class="site_header">
+            <h2> <i class="fa fa-key"></i> - EncryptGIG - <i class="fa fa-lock"></i> </h2>
+        </div>
+
         <nav class="navbar navbar-default">
             <div class="container-fluid">
 
                 <div class="navbar-header">
                     <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
                         <i class="glyphicon glyphicon-menu-hamburger"></i>
-                        <span>Encrypt-GIG</span>
+                        Menu
                     </button>
                 </div>
 
@@ -153,8 +157,6 @@
                     <div class="container" style="text-align: center">
                         <h2  style="text-align: center;margin-top: 10px;" id="sys_status"></h2>
                     </div>
-
-
                 </div>
             </div>
         </nav>
@@ -170,7 +172,7 @@
                     <input type="password" class="form-control" id="master_password">
                 </div>
                 <div class="form-group">
-                    <button class="btn" onclick='initilizeSystem(document.getElementById("master_password"),true)'>Begin Encryption</button>
+                    <button class="btn" onclick='initilizeSystem(document.getElementById("master_password"),false)'>Begin Encryption</button>
                 </div>
                 <h2>OR</h2>
                 <div class="form-group">

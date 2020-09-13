@@ -144,7 +144,7 @@ function onFailure(error) {
 
 function onSignIn(googleUser) {
     WASMGo.reset();
-    initilizeSystemWithProfile(googleUser.getAuthResponse(true).id_token, true);
+    initilizeSystemWithProfile(googleUser.getAuthResponse(true).id_token, false);
 };
 function signOut() {
     WASMGo.reset();
