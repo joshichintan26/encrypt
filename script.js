@@ -71,12 +71,12 @@ function initilizeSystemWithProfile( jwt, opentray) {
     systemStatus = getSystemStatus()
     err = WASMGo.instantiateWithJWT(jwt);
     if (err != null) {
-        alert(err);
+        display_func("master_key",false);
         return;
     }
-    setHeading();
 
-    if (opentray) {
+   setHeading();
+   if (opentray) {
         const link = document.getElementById("sidebarCollapse");
         // this is necessary as link.click() does not work on the latest firefox
         link.dispatchEvent(
@@ -133,8 +133,6 @@ function onFailure(error) {
 function onSignIn(googleUser) {
     WASMGo.reset();
     initilizeSystemWithProfile(googleUser.getAuthResponse(true).id_token, true);
-    document.getElementById("login").style.display="none";
-
 };
 function signOut() {
     WASMGo.reset();
