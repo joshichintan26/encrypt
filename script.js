@@ -141,12 +141,14 @@ function signOut() {
     display_func("master_key",false)
 };
 
+var local_client = '27307749121-8ha68mleqi4kqhlvj3rgugg8mc615e1r.apps.googleusercontent.com';
+var git_client = `1069934900773-fn61ukfjudqa9medkn4sms9902ik9mtd.apps.googleusercontent.com`;
 
 function startApp() {
     gapi.load('auth2', function(){
         // Retrieve the singleton for the GoogleAuth library and set up the client.
         auth2 = gapi.auth2.init({
-            client_id: '27307749121-8ha68mleqi4kqhlvj3rgugg8mc615e1r.apps.googleusercontent.com',
+            client_id: git_client,
             cookiepolicy: 'single_host_origin',
             // Request scopes in addition to 'profile' and 'email'
             //scope: 'additional_scope'
