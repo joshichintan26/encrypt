@@ -10,6 +10,18 @@ function getSystemStatus() {
     }
 }
 
+function display_element(id) {
+    maind = document.getElementById("main-div");
+    ch = maind.firstChild;
+    while (ch != null) {
+        if ( ch.style != null) {
+            ch.style.display = "none";
+        }
+        ch = ch.nextSibling;
+    }
+    document.getElementById(id).style.display = "block";
+}
+
 function display_func(id, validate, openlogin) {
 
     systemStatus = getSystemStatus()

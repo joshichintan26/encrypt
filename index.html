@@ -25,6 +25,8 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
+            display_element("loader",false);
+
             if (!WebAssembly.instantiateStreaming) { // polyfill
                 WebAssembly.instantiateStreaming = async (resp, importObject) => {
                     const source = await (await resp).arrayBuffer();
@@ -107,6 +109,12 @@
                     Encrypt CSV
                 </a>
             </li>
+            <li >
+                <a href="#" onclick='display_func("encrypt_xls", true)' >
+                    <i class="glyphicon glyphicon-certificate"></i>
+                    Encrypt CSV
+                </a>
+            </li>
             <li>
                 <a href="#" onclick='display_func("about", false)'>
                     <i class="glyphicon glyphicon-briefcase"></i>
@@ -152,6 +160,9 @@
         </nav>
 
         <div id="main-div" >
+
+            <div id="loader"></div>
+
             <div id="master_key">
                 <h3>Insert Master Key</h3>
                 <div class="form-group">
@@ -235,6 +246,31 @@
                 <div class="form-group">
                     <label for="pwd">Columns To Encrypt:</label>
                     <div id="cols_csv">
+
+                    </div>
+                </div>
+                <div class="form-group" >
+                    <button class="btn" id="button_csv_encrypt" onclick='csvCrypto(true)'>Encrypt File</button>
+                    <button class="btn" id="button_csv_decrypt" onclick='csvCrypto(false)'>Decrypt File</button>
+                </div>
+                <div class="line"></div>
+                <h3>About CSV Encryption</h3>
+                <p>
+                    <b>We can encrypt any column or row in your csv.</b>
+                    We tokenize the data you give us in CSV file. Trust us we don't change the size of data while we tokenize it.
+                    The resultant fil is CSV, that contains your tokenized CSV data.
+                </p>
+            </div>
+
+            <div id="encrypt_xls">
+                <h3>Excel Encryption</h3>
+                <div class="form-group">
+                    <p>Excel File to encrypt:</p>
+                    <input type="file" id="csv_file_name" onchange='initCSV()'>
+                </div>
+                <div class="form-group">
+                    <label for="pwd">Columns To Encrypt:</label>
+                    <div id="cols_xls">
 
                     </div>
                 </div>
